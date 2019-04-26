@@ -1,13 +1,13 @@
 # install dotfile dependencies for manjaro linux
+# using xfce
 
-echo -n "Installing Pacman packages...\n"
 sudo pacman -Syy --noconfirm && sudo pacman -Syu --noconfirm
 sudo pacman -S yay curl stow vim tmux htop cmake zsh --noconfirm
 curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 echo -n "Done.\n"
 
 echo -n "Installing sub packages...\n"
-sudo yay -S discord google-chrome okular fzf cppcheck uim
+sudo yay -S discord google-chrome okular fzf cppcheck uim gitkracken
 echo -n "Done.\n"
 
 echo -n "clone Vundle to ${HOME}/.vim/bundle/Vundle.vim...\n"
@@ -30,11 +30,19 @@ rm -rf fonts
 echo -n "Done\n"
 
 echo -n "Set korean keyboard based uim...\n"
-$ xmodmap -e 'remove mod1 = Alt_R'
-$ xmodmap -e 'keycode 108 = Hangul'
+xmodmap -e 'remove mod1 = Alt_R'
+xmodmap -e 'keycode 108 = Hangul'
 
-$ xmodmap -e 'remove control = Control_R'
-$ xmodmap -e 'keycode 105 = Hangul_Hanja'
+xmodmap -e 'remove control = Control_R'
+xmodmap -e 'keycode 105 = Hangul_Hanja'
 
-$ xmodmap -pke > ~/.Xmodmap
+xmodmap -pke > ~/.Xmodmap
 echo -n "Done.\n"
+
+echo -n "Installing terminal colorschemes"
+git clone https://github.com/mbadolato/iTerm2-Color-Schemes.git ${HOME}/iTerm2-Color-Schemes
+if [ ! -d "${HOME}/.local/share/xfce4/terminal" ]; then
+    mkdir ${HOME}/.local/share/xfce4 && mkdir ${HOME}/.local/share/xfce4/terminal
+fi
+cp ${HOME}/iTerm2-Color-Schemes/xfce4termianl/colorschemes ~/.local/share/xfce4/termianl
+rm -rf ${HOME}/iTerm2-Color-Schemes
