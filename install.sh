@@ -19,6 +19,9 @@ ln -sf ${PWD}/vim/.vimrc ~/.vimrc
 source ${PWD}/zsh/setting.sh
 ln -sf ${PWD}/zsh/.zshrc ~/.zshrc
 
+# symbolic link clang-format
+ln -sf ${PWD}/clang-format/.clang-format ~/.clang-format
+
 echo -n "Set korean keyboard based uim...\n"
 xmodmap -e 'remove mod1 = Alt_R'
 xmodmap -e 'keycode 108 = Hangul'

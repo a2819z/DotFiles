@@ -24,3 +24,6 @@ echo "YCM Compile..."
 cd ${HOME}/.vim/bundle/YouCompleteMe
 git submodule update --init --recursive
 ./install.py --clangd-completer
+
+# symbolic link ycm_conf
+ln -sf ${PWD}/vim/.ycm_extra_conf.py ~/.vim/.ycm_extra_conf.py
