@@ -54,6 +54,9 @@ Plugin 'honza/vim-snippets'
 Plugin 'SirVer/ultisnips'
 Plugin 'majutsushi/tagbar'
 
+" Python
+Plugin 'plytophogy/vim-virtualenv'
+
 " Etc.
 Plugin 'kana/vim-operator-user'
 Plugin 'rhysd/vim-clang-format'
@@ -175,4 +178,3 @@ let g:NERDTrimTrailingWhitespace = 1
 
 " indentLine
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-
