@@ -8,6 +8,9 @@ echo -n "Installing sub packages...\n"
 sudo yay -S discord google-chrome okular fzf cppcheck uim gitkracken clang
 echo -n "Done.\n"
 
+# Install base devel packages
+sudo apt-get install build-essential --noconfirm
+
 # Python install
 source ${PWD}/python/setting.sh
 

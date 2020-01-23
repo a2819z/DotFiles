@@ -1,5 +1,5 @@
 " vim option
-let mapleader = ","
+let mapleader=","
 syntax on
 set number
 set relativenumber
@@ -27,85 +27,39 @@ filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
+
 call vundle#begin()
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plugin 'VundleVim/vundle.vim'
 
 " statusbar
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 
-" File System
-Plugin 'scrooloose/nerdtree'    "File Tree
-Plugin 'ctrlpvim/ctrlp.vim'     "File search
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
+" autocomplete & linter
+Plugin 'Shougo/deoplete.nvim'
+Plugin 'roxma/nvim-yarp'
+Plugin 'roxma/vim-hug-neovim-rpc'
+Plugin 'zchee/deoplete-jedi'
 
-" Git
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
+Plugin 'dense-analysis/ale'
 
-" C++
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'w0rp/ale'
-Plugin 'honza/vim-snippets'
-Plugin 'SirVer/ultisnips'
-Plugin 'majutsushi/tagbar'
-
-" Python
-Plugin 'plytophogy/vim-virtualenv'
-
-" Etc.
-Plugin 'kana/vim-operator-user'
-Plugin 'rhysd/vim-clang-format'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'Yggdroot/indentLine'
-
-call vundle#end()            " required
+" ETC.
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'
+call vundle#end()
 filetype plugin indent on    " required
 
-" Key Mapping F1 ~ F12
-map <F2> :bn<CR>
-map <F3> <ESC>:NERDTreeToggle<CR>
-map <F4> :TagbarToggle<CR>
-map <F6> :YcmCompleter GoTo<CR>
+" Deoplete
+let g:deoplete#enable_at_startup = 1
 
+let g:auto_complete_delay = 200
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+let g:deoplete#sources#jedi#python_path='/usr/bin/python3'
 
-" vim-airline
-let g:airline_powerline_fonts =1
-let g:airline#extensions#tabline#enabled =1
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline_detect_modified=1
-let g:airline_skip_empty_sections=1
-let g:airline#extensions#ycm#enabled=0
-let g:airline#extensions#ale#enabled=1
+" ALE
+let g:ale_completion_enabled = 0
 
-" cpp-enhanced-highlight option
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
-let g:cpp_experimental_simple_template_highlight =1
-
-" snipset
-let g:UltiSnipsExpandTrigger="<C-j>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-let g:UltiSnipsEditSplit="vertical"
-
-" YouCompleteMe
-" libclang based
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_key_list_select_comletion=['<tab>']
-let g:ycm_key_list_previous_completion=['<s-tab>']
-let g:ycm_show_diagnostics_ui = 0
-
-" clangd based
-let g:ycm_clangd_uses_ycmd_caching=0
-let g:ycm_clnagd_binary_path=exepath("clangd")
-
-" ale
 let g:ale_set_highlights=1
 let g:ale_set_signs=1
 
@@ -115,8 +69,11 @@ let g:ale_cursor_detail=1
 let g:ale_close_preview_on_insert=1
 let g:ale_echo_delay=100
 
-let g:ale_linters={'cpp': ['clangtidy', 'cppcheck', 'gcc']}
-let g:ale_completion_enabled=0
+let g:ale_linters={'cpp': ['clangtidy', 'cppcheck', 'gcc'], 'python': ['flake8']}
+let g:ale_fixers = {
+            \'*': ['remove_trailing_lines', 'trim_whitespace'],
+            \'python': ['black', 'isort'],
+            \}
 
 let g:ale_cpp_clangtidy_checks=['modernize-*', 'cppcoreguidelines-*', 'performance-*', 'portability-*', 'bugprone-*', 'cert-*']
 let g:ale_cpp_clangtidy_header_suffixes=['h', 'hpp', 'hxx', 'tcc']
@@ -128,22 +85,9 @@ let g:ale_cpp_gcc_options = '-Wall -std=c++17 -xc++'
 nmap <silent> <C-j> :ALENext<cr>
 nmap <silent> <C-k> :ALEPrevious<cr>
 
-" CtrlP
-let g:ctrlp_workig_path_mode='r'
+" NerdTree
+map <F3> :NERDTreeToggle<CR>
 
-" delimiMate
-let delimMate_expand_cr=1
-
-" vim-multiple-cursor
-let g:multi_cursor_use_default_mapping=0
-
-" mapping
-let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_prev_key='<C-p>'
-let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
-
-" NERDTree
 autocmd BufEnter * lcd %:p:h
 autocmd VimEnter * if !argc() | NERDTree | endif
 
@@ -156,25 +100,5 @@ function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
   exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
 endfunction
 
-"   call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
-"   call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
-"   call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
-
-" clang-format
-map <F5> :pyf /usr/share/clang/clang-format.py<cr>
-imap <F5> <c-o>:pyf /usr/share/clang/clang-format.py<cr>
-
-" tagbar
-let g:tagbar_left=1
-
-" NERD Commenter
-let g:NERDSpaceDelims = 1
-let g:NERDCompactSexyComs = 1
-let g:NERDDefaultAlign = 'left'
-let g:NERDAltDelims_java = 1
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-let g:NERDCommentEmptyLines = 1
-let g:NERDTrimTrailingWhitespace = 1
-
-" indentLine
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+" CtrlP
+let g:ctrlp_workig_path_mode='r'

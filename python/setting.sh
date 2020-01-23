@@ -9,4 +9,4 @@ else
     sudo pacman -S python3
 fi
 
-pip3 install virtualenv
+pip3 install --user virtualenv

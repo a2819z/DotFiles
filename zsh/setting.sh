@@ -7,7 +7,7 @@ then
     echo "Already Installed zsh"
 else
     echo "Install zsh..."
-    sudo pacman -S zsh --noconfirm
+    sudo apt install zsh 
     curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
 fi
 
@@ -15,7 +15,7 @@ echo "Install zsh plugin..."
 if [[ "$(which git)" != "/usr/bin/git" ]]
 then
     echo "There is no Git. Install Git..."
-    sudo pacman -S git --noconfirm
+    sudo apt install git
 else
     git clone https://github.com/chrissicool/zsh-256color.git ${HOME}/.oh-my-zsh/plugins/zsh-256color
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${HOME}/.oh-my-zsh/plugins/zsh-syntax-highlighting
