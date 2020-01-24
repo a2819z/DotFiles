@@ -21,18 +21,13 @@ else
     sudo make install
 fi
 
-echo "Install NeoVim Plugin..."
-if [[ "$(which curl)" != "/usr/bin/curl" ]]
-then
-    echo "There is no curl. Install curl..."
-    sudo apt -y install curl 
-fi
+echo "Install NeoVim Plugin Pre-requirements..."
+sudo apt -y install curl node
 
 curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 mkdir -p ~/.config/nvim
 cp ./init.vim ~/.config/nvim/
 
-nvim +PluginInstall +qall
-nvim "+CocInstall coc-python" +qall
-nvim "+CocInstall coc-snippets" +qall
+nvim -c "PluginInstall" +qall
+nvim -c "CocInstall coc-python coc-json coc-snippets|q"
