@@ -47,15 +47,20 @@ Plugin 'dense-analysis/ale'
 " ETC.
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
+Plugin 'SirVer/ultisnips'
+Plugin 'honza/vim-snippets'
+
 call vundle#end()
 filetype plugin indent on    " required
 
 " Deoplete
 let g:deoplete#enable_at_startup = 1
-
 let g:auto_complete_delay = 200
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 let g:deoplete#sources#jedi#python_path='/usr/bin/python3'
+
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+
 
 " ALE
 let g:ale_completion_enabled = 0
@@ -102,3 +107,8 @@ endfunction
 
 " CtrlP
 let g:ctrlp_workig_path_mode='r'
+
+" ultisnips
+let g:UltiSnipsExpandTrigger = "<C-e>"
+let g:UltiSnipsJumpForwardTrigger = "<C-l>"
+let g:UltiSnipsJumpBackwardTrigger="<C-h>"
